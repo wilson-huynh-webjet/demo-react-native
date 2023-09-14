@@ -5,11 +5,12 @@ import styled from 'styled-components/native'
 import Button from './src/components/Button'
 import { useState } from 'react'
 import If from './src/components/If'
-import { WebView } from 'react-native-webview';
+import WebView from './src/components/Webview'
 
 export default function App () {
   const [showSearch, setShowSearch] = useState(false)
-  const searchUrl = 'https://services.dev.webjet.com.au/web/flights/redirect?size=mobile&Adults=1&Children=0&Infants=0&countryfrom=australia&countryto=australia&triptype=oneway&steps=MEL-SYD-20230921-economy-Melbourne-Sydney'
+  const searchUrl =
+    'https://services.dev.webjet.com.au/web/flights/redirect?size=mobile&Adults=1&Children=0&Infants=0&countryfrom=australia&countryto=australia&triptype=oneway&steps=MEL-SYD-20230921-economy-Melbourne-Sydney'
 
   const handleSearchButton = () => {
     setShowSearch(!showSearch)
@@ -24,7 +25,7 @@ export default function App () {
         <MainContainer>
           <If condition={showSearch}>
             <SearchContainer>
-              <WebView source={{ uri: searchUrl }} style={{ flex: 1 }} />
+              <WebView uri={searchUrl}></WebView>
             </SearchContainer>
           </If>
           <If condition={!showSearch}>
