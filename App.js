@@ -1,19 +1,19 @@
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import styled from 'styled-components/native'
-import Button from './src/components/Button'
 import { useState } from 'react'
 import If from './src/components/If'
-import WebView from './src/components/Webview'
+import { Tab, TabView } from '@rneui/themed'
+import Flights from './src/components/Flights'
+import Packages from './src/components/Packages'
+import Hotels from './src/components/Hotels'
 
 export default function App () {
-  const [showSearch, setShowSearch] = useState(false)
-  const searchUrl =
-    'https://services.dev.webjet.com.au/web/flights/redirect?size=mobile&Adults=1&Children=0&Infants=0&countryfrom=australia&countryto=australia&triptype=oneway&steps=MEL-SYD-20230921-economy-Melbourne-Sydney'
+  const [index, setIndex] = useState(0)
+  const [showMenu, setShowMenu] = useState(true)
 
-  const handleSearchButton = () => {
-    setShowSearch(!showSearch)
+  const handleOnSearch = () => {
+    setShowMenu(false)
   }
 
   return (
@@ -22,33 +22,52 @@ export default function App () {
         <Header>
           <StyleText>webjet.com.au</StyleText>
         </Header>
-        <MainContainer>
-          <If condition={showSearch}>
-            <SearchContainer>
-              <WebView uri={searchUrl}></WebView>
-            </SearchContainer>
-          </If>
-          <If condition={!showSearch}>
-            <Button onPress={handleSearchButton}>Search</Button>
-          </If>
-          <StatusBar style='auto' />
-        </MainContainer>
+        <If condition={showMenu}>
+          <Tab
+            value={index}
+            onChange={e => setIndex(e)}
+            indicatorStyle={{
+              backgroundColor: 'white',
+              height: 3
+            }}
+          >
+            <Tab.Item
+              title='FLIGHTS'
+              titleStyle={{ fontSize: 12, color: 'white' }}
+              icon={{ name: 'timer', type: 'ionicon', color: 'white' }}
+            />
+            <Tab.Item
+              title='PACKAGES'
+              titleStyle={{ fontSize: 12, color: 'white' }}
+              icon={{ name: 'heart', type: 'ionicon', color: 'white' }}
+            />
+            <Tab.Item
+              title='HOTELS'
+              titleStyle={{ fontSize: 12, color: 'white' }}
+              icon={{ name: 'cart', type: 'ionicon', color: 'white' }}
+            />
+          </Tab>
+        </If>
+        <TabView
+          value={index}
+          onChange={setIndex}
+          style={{ flex: 1, backgroundColor: 'green' }}
+        >
+          <TabView.Item style={{ flex: 1 }}>
+            <Flights onSearch={handleOnSearch} />
+          </TabView.Item>
+          <TabView.Item style={{ flex: 1 }}>
+            <Packages onSearch={handleOnSearch} />
+          </TabView.Item>
+          <TabView.Item style={{ flex: 1 }}>
+            <Hotels onSearch={handleOnSearch} />
+          </TabView.Item>
+        </TabView>
+        <StatusBar style='auto' />
       </SafeAreaView>
     </SafeAreaProvider>
   )
 }
-
-const MainContainer = styled.View`
-  flex: 1;
-  background-color: white;
-  justify-content: center;
-  align-items: center;
-`
-
-const SearchContainer = styled.View`
-  flex: 1;
-  width: 100%;
-`
 
 const Header = styled.View`
   display: flex;
