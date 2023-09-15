@@ -1,13 +1,19 @@
 import { StatusBar } from 'expo-status-bar'
 import styled from 'styled-components/native'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { If } from './components'
 import Flights from './components/Flights'
 import Packages from './components/Packages'
 import Hotels from './components/Hotels'
 import { Tab, TabView } from '@rneui/themed'
-import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import {
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Animated
+} from 'react-native'
 import useStore from './store'
+import SETTINGS from './constants'
 
 export default function Main () {
   const showHeader = useStore(state => state.showHeader)
@@ -23,17 +29,52 @@ export default function Main () {
     setHeader(true)
   }
 
+  // fadeAnim will be used as the value for opacity. Initial Value: 0
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true
+    }).start()
+  }
+
+  const fadeOut = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true
+    }).start()
+  }
+
+  useEffect(() => {
+    if (showHeader) {
+      fadeOut()
+    } else {
+      fadeIn()
+    }
+  }, [showHeader])
+
   return (
     <>
       <Header>
-        <TouchableWithoutFeedback onPress={handleOnHeaderPress}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: 'https://services.webjet.com.au/web/ui/uipatternlibrary/patterns/webjet/images/webjet-logo.png'
+        <Logo>
+          <Image style={styles.image} source={SETTINGS.LOGO_URL} />
+        </Logo>
+        <If condition={!showHeader}>
+          <Animated.View
+            style={{
+              opacity: fadeAnim
             }}
-          />
-        </TouchableWithoutFeedback>
+          >
+            <TouchableOpacity onPress={handleOnHeaderPress}>
+              <BackButton>
+                <BackIcon>‹</BackIcon>
+              </BackButton>
+            </TouchableOpacity>
+          </Animated.View>
+        </If>
       </Header>
       <If condition={showHeader}>
         <Tab
@@ -74,7 +115,6 @@ export default function Main () {
       <TabView
         value={index}
         onChange={setIndex}
-        style={{ flex: 1, backgroundColor: 'green' }}
       >
         <TabView.Item style={{ flex: 1 }}>
           <Flights onSearch={handleOnSearch} />
@@ -92,12 +132,34 @@ export default function Main () {
 }
 
 const Header = styled.View`
+  position: relative;
   display: flex;
   line-height: 130%;
   background: red;
-  justify-content: center;
-  align-items: center;
-  padding: 12px;
+  flex: 1;
+  max-height: 65px;
+  flex-direction: row-reverse;
+  margin-right: 40px;
+`
+
+const Logo = styled.Text`
+  height: 80px;
+  text-align: center;
+  width: 110%;
+  margin-top: -15px;
+`
+
+const BackButton = styled.View`
+  height: 68px;
+  width: 60px;
+  padding: 5px 10px 0 20px;
+  margin-right: -50px;
+`
+
+const BackIcon = styled.Text`
+  color: white;
+  font-size: 40px;
+  font-weight: 700;
 `
 
 const styles = StyleSheet.create({
@@ -107,5 +169,22 @@ const styles = StyleSheet.create({
   image: {
     width: 145,
     height: 53
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  fadingContainer: {
+    padding: 20,
+    backgroundColor: 'powderblue'
+  },
+  fadingText: {
+    fontSize: 28
+  },
+  buttonRow: {
+    flexBasis: 100,
+    justifyContent: 'space-evenly',
+    marginVertical: 16
   }
 })

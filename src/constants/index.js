@@ -1,4 +1,7 @@
 const SETTINGS = {
+  LOGO_URL: {
+    uri: 'https://services.webjet.com.au/web/ui/uipatternlibrary/patterns/webjet/images/webjet-logo.png'
+  },
   FLIGHTS_SEARCH_URL:
     'https://services.dev.webjet.com.au/web/flights/redirect?size=mobile&Adults=1&Children=0&Infants=0&countryfrom=australia&countryto=australia&triptype=oneway&steps=MEL-SYD-20240621-economy-Melbourne-Sydney',
   HOTELS_SEARCH_URL:

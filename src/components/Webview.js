@@ -8,12 +8,12 @@ const WebView = ({ uri }) => {
 
   return (
     <>
-      <If condition={isWebPlatform}>
+        <RnWebview source={{ uri }} style={{ flex: 1 }} />
+      {/* <If condition={isWebPlatform}>
         <iframe src={uri} height={'100%'} width={'100%'} />
       </If>
       <If condition={!isWebPlatform}>
-        <RnWebview source={{ uri }} style={{ flex: 1 }} />
-      </If>
+      </If> */}
     </>
   )
 }
