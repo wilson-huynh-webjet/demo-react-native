@@ -1,28 +1,26 @@
 import { useState } from 'react'
 import styled from 'styled-components/native'
 import React from 'react'
-import {If, Button} from './index'
+import { If, Button } from './index'
 import WebView from './Webview'
-import { Card, ButtonGroup  } from '@rneui/themed'
+import { Card, ButtonGroup } from '@rneui/themed'
 import SETTINGS from '../constants'
+import useStore from '../store'
 
 const Flights = ({ onSearch }) => {
-  const [showSearch, setShowSearch] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const showHeader = useStore(state => state.showHeader)
+  const setHeader = useStore(state => state.setHeader)
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   const handleSearchButton = () => {
-    setShowSearch(!showSearch)
+    setHeader(false)
     onSearch && onSearch()
   }
 
   return (
     <MainContainer>
-      <If condition={showSearch}>
-        <SearchContainer>
-          <WebView uri={SETTINGS.FLIGHTS_SEARCH_URL}></WebView>
-        </SearchContainer>
-      </If>
-      <If condition={!showSearch}>
+      <If condition={showHeader}>
         <Card>
           <Card.Title h4>Find Flights</Card.Title>
           <Card.Divider />
@@ -34,8 +32,12 @@ const Flights = ({ onSearch }) => {
             }}
           />
           <Button onPress={handleSearchButton}>Search</Button>
-          
         </Card>
+      </If>
+      <If condition={!showHeader}>
+        <SearchContainer>
+          <WebView uri={SETTINGS.FLIGHTS_SEARCH_URL}></WebView>
+        </SearchContainer>
       </If>
     </MainContainer>
   )

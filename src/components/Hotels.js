@@ -5,25 +5,27 @@ import { If, Button } from './index'
 import WebView from './Webview'
 import { Text } from '@rneui/base'
 import SETTINGS from '../constants'
+import useStore from '../store'
 
 const Hotels = ({ onSearch }) => {
-  const [showSearch, setShowSearch] = useState(false)
+  const showHeader = useStore(state => state.showHeader)
+  const setHeader = useStore(state => state.setHeader)
 
   const handleSearchButton = () => {
-    setShowSearch(!showSearch)
+    setHeader(false)
     onSearch && onSearch()
   }
 
   return (
     <MainContainer>
-      <If condition={showSearch}>
+      <If condition={showHeader}>
+        <Text h4>Hotels Search</Text>
+        <Button onPress={handleSearchButton}>Search</Button>
+      </If>
+      <If condition={!showHeader}>
         <SearchContainer>
           <WebView uri={SETTINGS.HOTELS_SEARCH_URL}></WebView>
         </SearchContainer>
-      </If>
-      <If condition={!showSearch}>
-        <Text h4>Hotels Search</Text>
-        <Button onPress={handleSearchButton}>Search</Button>
       </If>
     </MainContainer>
   )

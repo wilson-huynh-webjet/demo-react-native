@@ -1,20 +1,26 @@
 import { StatusBar } from 'expo-status-bar'
 import styled from 'styled-components/native'
 import { useState } from 'react'
-import { If, Flights, Packages, Hotels } from './components'
+import { If } from './components'
+import Flights from './components/Flights'
+import Packages from './components/Packages'
+import Hotels from './components/Hotels'
 import { Tab, TabView } from '@rneui/themed'
 import { Image, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import useStore from './store'
 
 export default function Main () {
+  const showHeader = useStore(state => state.showHeader)
+  const setHeader = useStore(store => store.setHeader)
+
   const [index, setIndex] = useState(0)
-  const [showMenu, setShowMenu] = useState(true)
 
   const handleOnSearch = () => {
-    setShowMenu(false)
+    setHeader(false)
   }
 
   const handleOnHeaderPress = () => {
-    setShowMenu(true)
+    setHeader(true)
   }
 
   return (
@@ -29,7 +35,7 @@ export default function Main () {
           />
         </TouchableWithoutFeedback>
       </Header>
-      <If condition={showMenu}>
+      <If condition={showHeader}>
         <Tab
           value={index}
           scrollable={true}
