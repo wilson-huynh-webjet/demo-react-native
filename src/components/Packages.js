@@ -1,16 +1,13 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/native'
-import React from 'react'
-import If from './If'
+import { If, Button } from './index'
 
 import WebView from './Webview'
-import Button from './Button'
 import { Text } from '@rneui/base'
+import SETTINGS from '../constants'
 
 const Packages = ({ onSearch }) => {
   const [showSearch, setShowSearch] = useState(false)
-  const searchUrl =
-    'https://services.dev.webjet.com.au/web/packages/search/#/results?areaId=300178312&toSelection=Sydney&from=MEL&fromSelection=Tullamarine,+Melbourne,+Australia&to=SYD&checkInDate=20240806&checkOutDate=20240807&flightFromDate=20240806&flightToDate=20240807&travelClass=Economy&paxRequest=A2C0&childAge=0'
 
   const handleSearchButton = () => {
     setShowSearch(!showSearch)
@@ -21,7 +18,7 @@ const Packages = ({ onSearch }) => {
     <MainContainer>
       <If condition={showSearch}>
         <SearchContainer>
-          <WebView uri={searchUrl}></WebView>
+          <WebView uri={SETTINGS.PACKAGES_SEARCH_URL}></WebView>
         </SearchContainer>
       </If>
       <If condition={!showSearch}>

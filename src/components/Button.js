@@ -1,4 +1,4 @@
-import { Button as RneButton } from '@rneui/base'
+import { Button as RneButton } from '@rneui/themed'
 import React from 'react'
 
 const Button = ({ children, onPress }) => {
@@ -9,12 +9,14 @@ const Button = ({ children, onPress }) => {
         backgroundColor: '#2DB300',
         borderWidth: 2,
         borderColor: 'white',
-        borderRadius: 30
+        borderRadius: 4,
+        height: 50
       }}
       containerStyle={{
-        width: 200,
-        marginHorizontal: 50,
-        marginVertical: 10
+        flex: 1,
+        width: '100%',
+        marginHorizontal: 'auto',
+        marginVertical: 10,
       }}
       titleStyle={{ fontWeight: 'bold' }}
       onPress={onPress}

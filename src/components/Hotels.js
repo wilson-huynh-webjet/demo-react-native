@@ -1,16 +1,13 @@
 import { useState } from 'react'
 import styled from 'styled-components/native'
 import React from 'react'
-import If from './If'
-
+import { If, Button } from './index'
 import WebView from './Webview'
-import Button from './Button'
 import { Text } from '@rneui/base'
+import SETTINGS from '../constants'
 
 const Hotels = ({ onSearch }) => {
   const [showSearch, setShowSearch] = useState(false)
-  const searchUrl =
-    'https://services.dev.webjet.com.au/web/hotels/search/#/results?areaId=300178283&area=Melbourne&checkInDate=20250124&checkOutDate=20250125&paxRequest=A2C0&childAge=0'
 
   const handleSearchButton = () => {
     setShowSearch(!showSearch)
@@ -21,7 +18,7 @@ const Hotels = ({ onSearch }) => {
     <MainContainer>
       <If condition={showSearch}>
         <SearchContainer>
-          <WebView uri={searchUrl}></WebView>
+          <WebView uri={SETTINGS.HOTELS_SEARCH_URL}></WebView>
         </SearchContainer>
       </If>
       <If condition={!showSearch}>
