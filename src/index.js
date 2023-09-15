@@ -10,7 +10,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Animated
+  Animated, View
 } from 'react-native'
 import useStore from './store'
 import SETTINGS from './constants'
@@ -57,7 +57,7 @@ export default function Main () {
   }, [showHeader])
 
   return (
-    <>
+    <View style={{flex: 1, backgroundColor: 'red'}}>
       <Header>
         <Logo>
           <Image style={styles.image} source={SETTINGS.LOGO_URL} />
@@ -127,7 +127,7 @@ export default function Main () {
         </TabView.Item>
       </TabView>
       <StatusBar style='auto' />
-    </>
+    </View>
   )
 }
 
@@ -135,7 +135,7 @@ const Header = styled.View`
   position: relative;
   display: flex;
   line-height: 130%;
-  background: red;
+  background-color: red;
   flex: 1;
   max-height: 65px;
   flex-direction: row-reverse;
