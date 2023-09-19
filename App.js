@@ -1,9 +1,9 @@
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { ThemeProvider } from '@rneui/themed'
+import { Icon, ThemeProvider, useTheme } from '@rneui/themed'
 import Main from './src'
 import Theme from './src/styles/Theme'
 
-import { Text, View, Image } from 'react-native'
+import { Text, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import SETTINGS from './src/constants'
@@ -17,7 +17,7 @@ function ComingSoonScreen () {
         alignItems: 'center'
       }}
     >
-      <Text style={{ fontSize: 24}}>Coming Soon</Text>
+      <Text style={{ fontSize: 24 }}>Coming Soon</Text>
     </View>
   )
 }
@@ -25,6 +25,8 @@ function ComingSoonScreen () {
 const Tab = createBottomTabNavigator()
 
 function MyTabs () {
+  const { theme } = useTheme()
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -34,10 +36,11 @@ function MyTabs () {
           backgroundColor: '#D8D8D8'
         },
         tabBarLabelStyle: {
-          color: '#666',
-          fontWeight: 700
+          color: '#999',
+          fontWeight: 700,
+          fontSize: 14
         },
-        tabBarActiveTintColor: 'red'        
+        tabBarActiveTintColor: theme.colors.primary
       }}
     >
       <Tab.Screen
@@ -46,9 +49,11 @@ function MyTabs () {
         options={{
           tabBarIcon: ({ size, focused, color }) => {
             return (
-              <Image
-                style={{ width: size, height: size }}
-                source={SETTINGS.HOME_ICON}
+              <Icon
+                name='home'
+                size={30}
+                type='font-awesome'
+                color={theme.colors.primary}
               />
             )
           }
@@ -60,9 +65,11 @@ function MyTabs () {
         options={{
           tabBarIcon: ({ size, focused, color }) => {
             return (
-              <Image
-                style={{ width: size, height: size }}
-                source={SETTINGS.MY_TRIPS_ICON}
+              <Icon
+                name='luggage'
+                size={30}
+                type='material'
+                color={theme.colors.grey2}
               />
             )
           }
@@ -74,9 +81,11 @@ function MyTabs () {
         options={{
           tabBarIcon: ({ size, focused, color }) => {
             return (
-              <Image
-                style={{ width: size, height: size }}
-                source={SETTINGS.EDIT_TRIPS_ICON}
+              <Icon
+                name='edit'
+                size={30}
+                type='material'
+                color={theme.colors.grey2}
               />
             )
           }
@@ -88,9 +97,11 @@ function MyTabs () {
         options={{
           tabBarIcon: ({ size, focused, color }) => {
             return (
-              <Image
-                style={{ width: size, height: size }}
-                source={SETTINGS.PRICE_ALERTS_ICON}
+              <Icon
+                name='bell'
+                size={26}
+                type='font-awesome'
+                color={theme.colors.grey2}
               />
             )
           }
@@ -104,8 +115,10 @@ export default function App () {
   return (
     <ThemeProvider theme={Theme}>
       <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'red' }}>
-          <NavigationContainer >
+        <SafeAreaView
+          style={{ flex: 1, backgroundColor: SETTINGS.THEME.PRIMARY }}
+        >
+          <NavigationContainer>
             <MyTabs />
           </NavigationContainer>
         </SafeAreaView>

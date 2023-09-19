@@ -1,8 +1,12 @@
 import { createTheme } from "@rneui/themed";
+import SETTINGS from "../constants";
 
 const Theme = createTheme({
     lightColors: {
-      primary: 'red'
+      primary: SETTINGS.THEME.PRIMARY,
+      grey0: '#333',
+      grey1: '#666',
+      grey2: '#999'
     },
     mode: 'light',
     components: {
@@ -11,7 +15,7 @@ const Theme = createTheme({
       },
       ButtonGroup: {
         selectedButtonStyle: {
-          color: 'green',
+          color: SETTINGS.THEME.PRIMARY,
           backgroundColor: '#999',
           fontSize: 20
         },
@@ -31,6 +35,11 @@ const Theme = createTheme({
       },
       Tab: {
         dense: true
+      },
+      View: {
+        style: {
+          flex: 1
+        }
       },
       TabItem: {
         titleStyle: {

@@ -5,17 +5,19 @@ import { If } from './components'
 import Flights from './components/Flights'
 import Packages from './components/Packages'
 import Hotels from './components/Hotels'
-import { Tab, TabView } from '@rneui/themed'
+import { Tab, TabView, useTheme } from '@rneui/themed'
 import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Animated, View
+  Animated,
+  View
 } from 'react-native'
 import useStore from './store'
 import SETTINGS from './constants'
 
 export default function Main () {
+  const { theme } = useTheme()
   const showHeader = useStore(state => state.showHeader)
   const setHeader = useStore(store => store.setHeader)
 
@@ -57,7 +59,7 @@ export default function Main () {
   }, [showHeader])
 
   return (
-    <View style={{flex: 1, backgroundColor: 'red'}}>
+    <View style={{ flex: 1, backgroundColor: theme.colors.primary }}>
       <Header>
         <Logo>
           <Image style={styles.image} source={SETTINGS.LOGO_URL} />
@@ -88,34 +90,35 @@ export default function Main () {
         >
           <Tab.Item
             title='FLIGHTS'
-            icon={{ name: 'timer', type: 'ionicon', color: 'white' }}
+            icon={{ name: 'plane', type: 'font-awesome-5', color: 'white' }}
           />
           <Tab.Item
             title='PACKAGES'
-            icon={{ name: 'heart', type: 'ionicon', color: 'white' }}
+            icon={{
+              name: 'luggage-cart',
+              type: 'font-awesome-5',
+              color: 'white'
+            }}
           />
           <Tab.Item
             title='HOTELS'
-            icon={{ name: 'cart', type: 'ionicon', color: 'white' }}
+            icon={{ name: 'hotel', type: 'font-awesome', color: 'white' }}
           />
           <Tab.Item
             title='CARS'
-            icon={{ name: 'cart', type: 'ionicon', color: 'white' }}
+            icon={{ name: 'car', type: 'font-awesome', color: 'white' }}
           />
           <Tab.Item
             title='INSURANCE'
-            icon={{ name: 'cart', type: 'ionicon', color: 'white' }}
+            icon={{ name: 'umbrella', type: 'font-awesome-5', color: 'white' }}
           />
           <Tab.Item
             title='THINGS TO DO'
-            icon={{ name: 'cart', type: 'ionicon', color: 'white' }}
+            icon={{ name: 'explore', type: 'material', color: 'white' }}
           />
         </Tab>
       </If>
-      <TabView
-        value={index}
-        onChange={setIndex}
-      >
+      <TabView value={index} onChange={setIndex}>
         <TabView.Item style={{ flex: 1 }}>
           <Flights onSearch={handleOnSearch} />
         </TabView.Item>
@@ -135,7 +138,7 @@ const Header = styled.View`
   position: relative;
   display: flex;
   line-height: 130%;
-  background-color: red;
+  background-color: ${SETTINGS.THEME.primary};
   flex: 1;
   max-height: 65px;
   flex-direction: row-reverse;
