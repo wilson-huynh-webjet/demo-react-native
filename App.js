@@ -17,7 +17,7 @@ function ComingSoonScreen () {
         alignItems: 'center'
       }}
     >
-      <Text style={{ fontSize: 24 }}>Coming Soon</Text>
+      <Text style={{ fontSize: 24 }}>Coming Soon ...</Text>
     </View>
   )
 }
