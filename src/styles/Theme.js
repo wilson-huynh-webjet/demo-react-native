@@ -11,7 +11,13 @@ const Theme = createTheme({
     mode: 'light',
     components: {
       Button: {
-        raised: true
+        raised: true,
+        buttonStyle: {
+          borderWidth: 2,
+          borderColor: SETTINGS.THEME.SECONDARY,
+          borderRadius: 4,
+          height: 50
+        }
       },
       ButtonGroup: {
         selectedButtonStyle: {

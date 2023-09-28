@@ -1,6 +1,7 @@
 const SETTINGS = {
   THEME: {
-    PRIMARY: '#DC140A'
+    PRIMARY: '#DC140A',
+    SECONDARY: '#2DB300'    
   },
   LOGO_URL: {
     uri: 'https://services.webjet.com.au/web/ui/uipatternlibrary/patterns/webjet/images/webjet-logo.png'

@@ -1,17 +1,12 @@
 import { Button as RneButton } from '@rneui/themed'
 import React from 'react'
 
-const Button = ({ children, onPress }) => {
+const Button = ({ children, type, buttonStyle, onPress }) => {
   return (
     <RneButton
       size='lg'
-      buttonStyle={{
-        backgroundColor: '#2DB300',
-        borderWidth: 2,
-        borderColor: 'white',
-        borderRadius: 4,
-        height: 50
-      }}
+      type={type}
+      buttonStyle={{...buttonStyle}}
       containerStyle={{
         flex: 1,
         width: '100%',
